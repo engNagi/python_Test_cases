@@ -1,0 +1,6 @@
+Benutzername,Email,Vorname,Nachname,Passwort,Rolle
+stweiss_sub,stweiss_sub@nomail.org,Stephan,Weiss_sub,!NCS2019_sub,Abonnent
+stweiss_con,stweiss_con@nomail.org,Stephan,Weiss_con,!NCS2019_con,Mitarbeiter
+stweiss_aut,stweiss_aut@nomail.org,Stephan,Weiss_aut,!NCS2019_aut,Autor
+stweiss_edi,stweiss_edi@nomail.org,Stephan,Weiss_edi,!NCS2019_edi,Redakteur
+stweiss_adm,stweiss_adm@nomail.org,Stephan,Weiss_adm,!NCS2019_adm,Administrator

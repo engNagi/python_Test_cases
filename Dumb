@@ -1,0 +1,57 @@
+  @DeleteUser
+  Scenario: DeleteUser
+    Given we have navigated as ADMIN to the Userlist
+    When we delete the users
+    | Benutzername |
+    | stweiss_sub  |
+    | stweiss_con  |
+    | stweiss_aut  |
+    | stweiss_edi  |
+    | stweiss_adm  |
+
+------------------------------------------------------------------------------------------------------
+
+@when('we delete the users')                            # for Scenario: DeleteUser
+def step_impl(context):
+    for row in context.table:
+        # Suchmaske leeren
+        driver.find_element_by_xpath("//*[@id='user-search-input']").clear()
+
+        # Benutzername in Suchmaske eingeben
+        driver.find_element_by_xpath("//*[@id='user-search-input']").send_keys(row['Benutzername'])
+
+        # Suche ausführen
+        driver.find_element_by_xpath("//*[@id='search-submit']").click()
+
+        # Check ob der Benutzer der richtige ist
+        DelUser = driver.find_element_by_xpath(".//td[@class='username column-username has-row-actions column-primary'][1]/strong").text
+        if DelUser == row['Benutzername']:
+                # Mouseover in der Admin-Bar um den Logout-Button sichtbar zu machen
+                ActionChains(driver).move_to_element(driver.find_element_by_xpath(".//td[@class='username column-username has-row-actions column-primary'][1]/strong")).perform()
+    
+                # warte 1 Sekunde
+                time.sleep(1)
+
+                # auf löschen klicken
+                driver.find_element_by_xpath("//tr/td[@class='username column-username has-row-actions column-primary']/div/span[@class='delete']").click()
+                
+                # ggf. "Den gesamten Inhalt löschen" auswählen
+                try:
+                        driver.find_element_by_xpath("//*[@id='delete_option0']").click()
+                except:
+                        print("")
+
+                # löschen bestätigen
+                driver.find_element_by_xpath("//*[@id='submit']").click()
+
+                # Überprüfung ob der Benutzer gelöscht wurde
+                assert driver.find_element_by_xpath("//div[@id='message']/p").text == "Benutzer gelöscht"
+
+                # Screenshot erstellen Local
+                # driver.save_screenshot('Delete_User_%s.png' % row['Benutzername'])
+
+                # Screenshot erstellen Allure
+                allure.attach(driver.get_screenshot_as_png(), name='Delete_User_%s.png' % row['Benutzername'], attachment_type=allure.attachment_type.PNG)
+
+
+
