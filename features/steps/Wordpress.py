@@ -1,8 +1,6 @@
 # -- FILE: features/steps/Wordpress.py,
 
-import unittest
 import time
-import allure
 from behave import given, when, then
 
 from selenium import webdriver
